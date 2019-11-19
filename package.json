@@ -1,0 +1,17 @@
+{
+  "name": "kablosuzkedi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron . --no-sandbox"
+  },
+  "keywords": [],
+  "author": "atilla.balci@tarimorman.gov.tr",
+  "NODE_ENV": "production",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^7.1.1"
+  }
+}

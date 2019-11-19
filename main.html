@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr-TR" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="public/css/w3.css">
+</head>
+
+<body>
+    <h1>anasayfa</h1>
+    <button onclick="gonder();" class="w3-btn w3-round-large w3-khaki" id="btnSend">Gönder</button>
+    <button type="button" onclick="pencereAc()" class="w3-btn w3-block w3-round w3-indigo" name="button" id="btnPencereAc">Pencere aç</button>
+    <button type="button" onclick="gonder2()" name="button">buton2</button>
+    <input type="text" id="inputV">
+    <script>
+        const electron = require('electron');
+        const {
+            ipcRenderer
+        } = electron;
+
+        function gonder() {
+
+            ipcRenderer.send('key', 'value');
+        };
+
+        function gonder2() {
+
+            let inputV = document.getElementById('inputV');
+            alert(inputV.value);
+            ipcRenderer.send('key2', inputV.value);
+        }
+
+        function pencereAc() {
+            let btnPencereAc = document.getElementById("btnPencereAc");
+            ipcRenderer.send('btnPencereAc');
+
+        }
+    </script>
+</body>
+
+</html>
