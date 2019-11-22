@@ -8,35 +8,27 @@
 </head>
 
 <body>
-    <h1>anasayfa</h1>
-    <button onclick="gonder();" class="w3-btn w3-round-large w3-khaki" id="btnSend">Gönder</button>
-    <button type="button" onclick="pencereAc()" class="w3-btn w3-block w3-round w3-indigo" name="button" id="btnPencereAc">Pencere aç</button>
-    <button type="button" onclick="gonder2()" name="button">buton2</button>
-    <input type="text" id="inputV">
-    <script>
-        const electron = require('electron');
-        const {
-            ipcRenderer
-        } = electron;
 
-        function gonder() {
+    <div class="w3-container" style="padding: 20px">
+        <div class="w3-display-container" style="min-height: 100%">
 
-            ipcRenderer.send('key', 'value');
-        };
+            <div class="w3-row">
+                <div class="w3-col w3-blue" style="width:70%">
+                    <input type="text" placeholder="Yeni TODO ekle" class="w3-block w3-large">
+                </div>
+                <div class="w3-col w3-yellow" style="width:30%">
+                    <button type="button" class="w3-button w3-khaki w3-block w3-small">TODO ekle</button>
+                </div>
 
-        function gonder2() {
+            </div>
+            <div class="w3-row">
+                <div class="col" style="text-align: center">
+                    <h3>Yapılacaklar Listesi</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            let inputV = document.getElementById('inputV');
-            alert(inputV.value);
-            ipcRenderer.send('key2', inputV.value);
-        }
-
-        function pencereAc() {
-            let btnPencereAc = document.getElementById("btnPencereAc");
-            ipcRenderer.send('btnPencereAc');
-
-        }
-    </script>
 </body>
 
 </html>
