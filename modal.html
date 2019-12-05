@@ -5,17 +5,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="public/css/w3.css">
-
     <title></title>
 </head>
 
 <body>
     <div class="w3-display-container">
-        <div class="w3-padding w3-display-topmiddle">
-            <h1>Yeni pencere</h1>
+        <div class="w3-padding">
+            <h2>Yeni TODO ekle...</h2>
+            <input id="inputSave" type="text" class="w3-block" placeholder="Yeni TODO ekle..."><br>
+
+            <button id="modal_btnSave" onclick="save()" class="w3-btn w3-white w3-border w3-border-green w3-round-large">Ekle</button>
+
+            <button onclick="kapat();" class="w3-btn w3-white w3-border w3-border-red w3-round-large" id="btnVazgec">Vazgeç</button>
         </div>
     </div>
+    <script>
+        const electron = require('electron');
+        const {
+            ipcRenderer
+        } = electron;
 
+        function save() {
+            let inputSave = document.getElementById('inputSave');
+            ipcRenderer.send('modal_btnSave', inputSave.value);
+        }
+
+        function kapat() {
+
+            ipcRenderer.send('iptalBtn');
+
+        };
+    </script>
+    <script src="public/js/mainWindow.js"></script>
 </body>
 
 </html>

@@ -12,19 +12,23 @@ const {
 
 let mainWindow;
 let addWindow;
+let todoList = [];
 
 app.on('ready', () => {
     //console.log(process.env);
     let pageOptions = {
-        width: 600,
-        height: 300,
+        width: 602,
+        height: 402,
         //backgroundColor: '#2e2c29',
-        title: 'meryem',
         opacity: 0.92,
+        // resizable: false,
         webPreferences: {
             nodeIntegration: true
         }
     };
+
+
+
     mainWindow = new BrowserWindow(pageOptions);
     mainWindow.on('closed', () => {
         mainWindow = null
@@ -47,21 +51,57 @@ app.on('ready', () => {
         console.log(data);
         // }
     });
-    ipcMain.on('key2', (err, data) => {
+    ipcMain.on('key2', (event, data) => {
         console.log(data);
     });
-    ipcMain.on('btnPencereAc', () => {
+    ipcMain.on('btnPencereAc', (event, data) => {
         yeniPencereAc();
     });
+    ipcMain.on('iptalBtn', () => {
+        console.log('iptalBTN fonksiyonu çalıştı');
+        addWindow.close();
+        addWindow = null;
+    });
+
+    ipcMain.on('modal_btnSave', (event, data) => {
+        if (data) {
+            todoList.push({
+                id: todoList.length + 1,
+                text: data
+            });
+            console.log(todoList);
+            addWindow.close();
+            addWindow = null;
+        }
+    });
+    ipcMain.on('main_todoEkle', (event, data) => {
+        if (data) {
+            todoList.push({
+                id: todoList.length + 1,
+                text: data
+            });
+            console.log(todoList);
+            mainWindow.webContents.send("todoList_geldi", todoList);
+
+        }
+    });
+
     mainWindow.on('close', () => {
         app.quit();
     });
+
+
 });
+/*************app.on ready bitti*****************/
+
 const mainMenuTemplate = [{
         label: "Dosya",
         submenu: [{
                 label: "Yeni TODO ekle",
-                accelerator: process.platform == "darwin" ? "Command+A" : "Ctrl+A"
+                click() {
+                    yeniPencereAc();
+                },
+                accelerator: process.platform == "darwin" ? "Command+B" : "Ctrl+B"
             },
             {
                 label: "Hepsini sil"
@@ -103,9 +143,14 @@ if (process.env.NODE_ENV != "production") {
 
 function yeniPencereAc() {
     addWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: true
+        },
         width: 482,
-        height: 193,
-        title: 'Yeni Pencere'
+        height: 199,
+        title: 'Yeni Pencere',
+        resizable: false,
+        frame: false
     });
 
     let deger = url.format({

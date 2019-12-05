@@ -5,19 +5,20 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="public/css/w3.css">
+    <script src="public/js/mainWindow.js"></script>
 </head>
 
 <body>
 
-    <div class="w3-container" style="padding: 20px">
+    <div class="w3-container w3-margin-top">
         <div class="w3-display-container" style="min-height: 100%">
 
             <div class="w3-row">
                 <div class="w3-col w3-blue" style="width:70%">
-                    <input type="text" placeholder="Yeni TODO ekle" class="w3-block w3-large">
+                    <input required type="text" id="inputEkle" placeholder="Yeni TODO ekle" class="w3-block w3-large">
                 </div>
                 <div class="w3-col w3-yellow" style="width:30%">
-                    <button type="button" class="w3-button w3-khaki w3-block w3-small">TODO ekle</button>
+                    <button type="button" class="w3-button w3-khaki w3-block w3-small" id="btnEkle" onclick="ekle();">TODO ekle</button>
                 </div>
 
             </div>
@@ -26,8 +27,18 @@
                     <h3>Yapılacaklar Listesi</h3>
                 </div>
             </div>
+
+        </div>
+        <div class="w3-panel w3-pale-yellow w3-border" id="todoWarning">
+            <b>Herhangi bir TODO bulunmamaktadır!!!</b>
         </div>
     </div>
+    <div style="clear:both"></div>
+
+    <div id="todoContent">
+
+    </div>
+
 
 </body>
 
