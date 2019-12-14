@@ -10,18 +10,32 @@ const {
     ipcMain
 } = electron;
 
+
+
 let mainWindow;
 let addWindow;
 let todoList = [];
 
 app.on('ready', () => {
+
+    const screenElectron = electron.screen;
+    const display = screenElectron.getPrimaryDisplay();
+    const dimensions = display.workAreaSize;
+
     //console.log(process.env);
     let pageOptions = {
-        width: 602,
-        height: 402,
-        //backgroundColor: '#2e2c29',
-        opacity: 0.92,
+        //minWidth: 602,
+        //minHeight: 402,
+        //height: 402,
+        //width: 602,
+        //opacity: 0.92,
         // resizable: false,
+        width: parseInt(dimensions.width * 0.7),
+        height: parseInt(dimensions.height * 0.6),
+        minWidth: parseInt(dimensions.width * 0.3),
+        minHeight: parseInt(dimensions.height * 0.3),
+        maxWidth: dimensions.width,
+        maxHeight: dimensions.height,
         webPreferences: {
             nodeIntegration: true
         }
@@ -54,9 +68,16 @@ app.on('ready', () => {
     ipcMain.on('key2', (event, data) => {
         console.log(data);
     });
+
     ipcMain.on('btnPencereAc', (event, data) => {
-        yeniPencereAc();
+
+        let adim = "meryem";
+
+        yeniPencereAc(adim);
+
     });
+
+
     ipcMain.on('iptalBtn', () => {
         console.log('iptalBTN fonksiyonu çalıştı');
         addWindow.close();
@@ -72,6 +93,8 @@ app.on('ready', () => {
             console.log(todoList);
             addWindow.close();
             addWindow = null;
+
+            mainWindow.webContents.send('todoList_geldi', todoList);
         }
     });
     ipcMain.on('main_todoEkle', (event, data) => {
@@ -86,10 +109,19 @@ app.on('ready', () => {
         }
     });
 
+
     mainWindow.on('close', () => {
         app.quit();
     });
 
+    ipcMain.on('btnModalTikla', (event, data) => {
+        console.log('data' + data);
+        addWindow.webContents.send('gelendata', data);
+    });
+    ipcMain.on('anasayfa_cikisYapBtn', (event, data) => {
+        console.log('bu fonksiyon çalıştı :)');
+        app.quit();
+    });
 
 });
 /*************app.on ready bitti*****************/
@@ -141,7 +173,7 @@ if (process.env.NODE_ENV != "production") {
     })
 }
 
-function yeniPencereAc() {
+function yeniPencereAc(isim) {
     addWindow = new BrowserWindow({
         webPreferences: {
             nodeIntegration: true
@@ -150,7 +182,8 @@ function yeniPencereAc() {
         height: 199,
         title: 'Yeni Pencere',
         resizable: false,
-        frame: false
+        frame: false,
+
     });
 
     let deger = url.format({
@@ -159,6 +192,8 @@ function yeniPencereAc() {
         pathname: path.join(__dirname, "modal.html")
     });
     addWindow.loadURL(deger);
+
+    addWindow.webContents.send('adimiGonder', isim);
 
     addWindow.on('close', () => {
         addWindow = null;

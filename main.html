@@ -15,10 +15,10 @@
 
             <div class="w3-row">
                 <div class="w3-col w3-blue" style="width:70%">
-                    <input required type="text" id="inputEkle" placeholder="Yeni TODO ekle" class="w3-block w3-large">
+                    <input required type="text" id="inputEkle" onkeypress="keypressFunction(event)" placeholder="Yeni TODO ekle" class="w3-block w3-large w3-animate-top" style="background-color: white;">
                 </div>
                 <div class="w3-col w3-yellow" style="width:30%">
-                    <button type="button" class="w3-button w3-khaki w3-block w3-small" id="btnEkle" onclick="ekle();">TODO ekle</button>
+                    <button type="button" class="w3-button w3-khaki w3-block w3-small w3-animate-right" id="btnEkle" onclick="ekle();">TODO ekle</button>
                 </div>
 
             </div>
@@ -29,16 +29,21 @@
             </div>
 
         </div>
-        <div class="w3-panel w3-pale-yellow w3-border" id="todoWarning">
+        <div class="w3-panel w3-pale-yellow w3-border w3-animate-fading" id="todoWarning">
             <b>Herhangi bir TODO bulunmamaktadır!!!</b>
         </div>
+
+
     </div>
     <div style="clear:both"></div>
 
     <div id="todoContent">
 
     </div>
-
+    <div class="w3-bar w3-pale-red w3-display-bottommiddle" style="position: fixed; bottom: 0;">
+        <div class="w3-bar-item"><span>Toplam Kayıt Sayısı : </span><b id="yekunTodoNumber"></b></div>
+        <button class="w3-btn w3-round-large w3-small w3-red" style="color: white;" onclick="cikisYap();" id="cikisYap">Çıkış</button>
+    </div>
 
 </body>
 

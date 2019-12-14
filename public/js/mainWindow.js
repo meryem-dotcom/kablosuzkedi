@@ -3,6 +3,15 @@ const {
     ipcRenderer
 } = electron;
 
+let inputEkle = document.getElementById('inputEkle');
+
+function keypressFunction(event) {
+    var x = event.which || event.keyCode;
+    if (x == 13) {
+        ipcRenderer.send('main_todoEkle', event.target.value);
+        event.target.value = "";
+    };
+}
 
 ipcRenderer.on('todoList_geldi', (event, data) => {
     console.log(data);
@@ -18,6 +27,7 @@ ipcRenderer.on('todoList_geldi', (event, data) => {
     myBtn.addEventListener("click", (e) => {
         if (confirm("Bu kaydı silmek istediğinizden emin misiniz???")) {
             e.target.parentNode.parentNode.parentNode.remove();
+            checkTodoCount();
         };
     });
     //
@@ -35,7 +45,7 @@ ipcRenderer.on('todoList_geldi', (event, data) => {
     myHalf2.appendChild(butonTutucu);
 
     let myDivRow = document.createElement('div');
-    myDivRow.className = "w3-row w3-margin";
+    myDivRow.className = "w3-row w3-margin w3-animate-opacity";
     myDivRow.style.display = "flex";
 
     myDivRow.appendChild(myHalf);
@@ -45,6 +55,11 @@ ipcRenderer.on('todoList_geldi', (event, data) => {
     todoContent.appendChild(myDivRow);
     checkTodoCount();
 });
+
+function cikisYap() {
+
+    ipcRenderer.send('anasayfa_cikisYapBtn', 'cikisYapsana');
+};
 /**
  *
  * yeni todo ekleyen metoddur
@@ -66,6 +81,8 @@ function ekle() {
 function checkTodoCount() {
     let todoContent = document.getElementById("todoContent");
     let todoWarning = document.getElementById("todoWarning");
+    let yekunTodoNumber = document.getElementById("yekunTodoNumber");
+    yekunTodoNumber.innerText = todoContent.children.length;
     if (todoContent.children.length !== 0) {
         todoWarning.style.display = "none";
     } else {
