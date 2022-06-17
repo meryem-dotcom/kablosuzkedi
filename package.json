@@ -12,6 +12,6 @@
   "NODE_ENV": "production",
   "license": "ISC",
   "dependencies": {
-    "electron": "^7.1.1"
+    "electron": "^15.5.5"
   }
 }
